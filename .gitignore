@@ -1,0 +1,7 @@
+# workspace exclusions
+**/py**
+.vscode
+
+# project exclusions
+.env
+.py*
