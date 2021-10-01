@@ -1,5 +1,5 @@
 # workspace exclusions
-**/**py**
+**/**_py**
 .vscode
 
 # project exclusions
