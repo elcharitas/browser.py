@@ -1,7 +1,12 @@
 # workspace exclusions
-**/py**
+**/**py**
 .vscode
 
 # project exclusions
+build/
+dist/
+
+# configuration files
 .env
 .py*
+*.spec
