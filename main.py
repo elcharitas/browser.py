@@ -4,17 +4,17 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon
 
 # import required PyQt5 Widgtes
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QAction, QApplication, QLineEdit, QMainWindow, QToolBar
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 # Browser class to create new browser application and window
 class Browser(QApplication):
     def __init__(self):
-        # pass in console args
+        # initialize the application
         super(QApplication, self).__init__([])
 
         # set title and icon of browser
-        self.setApplicationName('Python Browser')
+        self.setApplicationName('Browser')
         self.setWindowIcon(QIcon('./icon.ico'))
 
         # create a window
@@ -30,12 +30,23 @@ class Browser(QApplication):
             self.engine = QWebEngineView()
             self.setCentralWidget(self.engine)
 
-            # display full screen
+            # display full screen on any monitor
             self.showMaximized()
 
-        def load(self, url=argv[0] if argv[1:] else 'https://google.com'):
+            # create a menubar
+            menubar = QToolBar()
+            self.addToolBar(menubar)
+            
+            # add the buttons
+            Button1 = QAction('Button 1', self)
+            Button2 = QAction('Button 2', self)
+            menubar.addActions([Button1, Button2])
+
+            # add the textbox
+            Textbox = QLineEdit()
+            menubar.addWidget(Textbox)
+
+        def load(self, url=argv[1] if argv[1:] else 'https://google.com'):
             self.engine.setUrl(QUrl(url))
 
-
-if __name__ == "__main__":
-    exit(Browser().exec_())
+exit(Browser().exec_())
