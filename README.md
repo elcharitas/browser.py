@@ -18,13 +18,18 @@ As per the client's requirements, this software has the following features
 
 ## Usage
 
-To use this app, simply copy the executable found in the `bin` directory to where you would want to use it.
+To use this app, simply copy the executable found in the `dist` directory to where you would want to use it.
 
 After copying, run the following command
 
 ```sh
-$ ./browse [url]
+$ ./browser [url]
 ```
 
 [url] can be any string which contains the URL to go to.
 
+To build a new version of the browser, simply run this command
+
+```sh
+$ pyinstaller -w -F -i "./icon.ico" --name browser main.py
+```
