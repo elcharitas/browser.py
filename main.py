@@ -8,8 +8,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 # Browser class to create new browser application and window
-
-
 class Browser(QApplication):
     def __init__(self):
         # pass in console args
@@ -17,7 +15,7 @@ class Browser(QApplication):
 
         # set title and icon of browser
         self.setApplicationName('Python Browser')
-        self.setWindowIcon(QIcon('./icon.png'))
+        self.setWindowIcon(QIcon('./icon.ico'))
 
         # create a window
         self.window = self.Window()
