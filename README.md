@@ -16,6 +16,16 @@ As per the client's requirements, this software has the following features
 - identifies multiple monitors
 - displays on full screen
 
+## Setup
+
+In order to properly setup this software and get it working, you need some modules installed.
+
+Don't fret, simply run the command below via the terminal to install the modules.
+
+```sh
+$ pip install -r requirements.txt
+```
+
 ## Usage
 
 To use this software, simply copy the executable found in the `dist` directory to where you would want to use it.
