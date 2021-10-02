@@ -33,3 +33,10 @@ To build a new version of the browser, simply run this command
 ```sh
 $ pyinstaller -w -F -i "./icon.ico" browser.py
 ```
+
+The above command will create three things:
+- browser.spec
+- build directory
+- dist directory
+
+You need not worry about these files created. Simply get the newly compiled browser from dist and copy to wherever you want.
