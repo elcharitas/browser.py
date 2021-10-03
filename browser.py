@@ -31,16 +31,41 @@ class Browser(QApplication):
 
         # create a window and load it
         self.window = self.Window()
-        self.window.load(URL)
+        self.change_url(URL)
 
         self.screen = screen if self.has_screen(screen) else 1
     
     @property
     def screens(self):
+        """Gets an enumerated object of screens
+
+        Returns:
+            obj: The enumerated object with an index screen
+        """        
         return enumerate([None] + self._screens)
     
     def has_screen(self, screen):
+        """Used internally to check if a screen is supported or existing
+
+        Args:
+            screen (int): The ID of the screen
+
+        Returns:
+            bool: true if the screen exists
+        """        
         return hasattr(self.screens, screen)
+    
+    def change_url(self, url: str):
+        """Changes the URL the engine is to load
+
+        Args:
+            url (str): new url to load
+        
+        Example:
+            app = Browser('https://example.com')
+            app.change_url('https://example2.com')
+        """        
+        self.window.engine.setUrl(QUrl(url))
 
     class Window(QMainWindow):
         def __init__(self):
@@ -77,7 +102,6 @@ class Browser(QApplication):
             # display full screen on any monitor
             self.showMaximized()
 
-        def load(self, url: str):
-            self.engine.setUrl(QUrl(url))
 
-exit(Browser().exec_())
+app = Browser()
+exit(app.exec_())
