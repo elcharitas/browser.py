@@ -83,7 +83,7 @@ class Browser(QApplication):
             self.window.menubar.hide()
 
     class Window(QMainWindow):
-        def __init__(self):
+        def __init__(self): 
             # create a connnection
             super(QMainWindow, self).__init__()
 
@@ -110,8 +110,8 @@ class Browser(QApplication):
             menubar.addWidget(Button2)
 
             # add the textbox
-            Textbox = QLineEdit()
-            menubar.addWidget(Textbox)
+            self.Textbox = QLineEdit()
+            menubar.addWidget(self.Textbox)
 
             # add the widget to layout
             self.menubar = QWidget()
@@ -126,6 +126,16 @@ class Browser(QApplication):
             """Refreshes the browser by revisiting the current link
             """            
             self.engine.setUrl(QUrl('#'))
+        
+        @property
+        def textbox(self):
+            """Get the text within the textbox as a variable
+            
+            Example:
+                app = Browser('https://example.com')
+                print(app.window.textbox)
+            """
+            return self.Textbox.text()
 
 
 app = Browser()
