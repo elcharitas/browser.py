@@ -53,7 +53,7 @@ class Browser(QApplication):
         Returns:
             bool: true if the screen exists
         """        
-        return hasattr(self.screens, screen)
+        return hasattr(self.screens, str(screen))
     
     def change_url(self, url: str):
         """Changes the URL the engine is to load
@@ -66,6 +66,21 @@ class Browser(QApplication):
             app.change_url('https://example2.com')
         """        
         self.window.engine.setUrl(QUrl(url))
+    
+    def hide_menubar(self, disabled=True):
+        """Hides/Shows the menu bar when disabled is True/False
+
+        Args:
+            disabled (bool, optional): Whether or not to hide the menubar. Defaults to True.
+        
+        Example:
+            app = Browser('https://example.com')
+            app.hide_menubar()
+        """        
+        if disabled is not False:
+            self.window.menubar.show()
+        else:
+            self.window.menubar.hide()
 
     class Window(QMainWindow):
         def __init__(self):
@@ -82,13 +97,12 @@ class Browser(QApplication):
             self.engine = QWebEngineView()
             self.layout.addWidget(self.engine)
 
-            # create a menubar layout
+            # create the menubar
             menubar = QHBoxLayout()
-            self.layout.addLayout(menubar)
-            
+
             # create refresh button and add to layout
             ButtonH = QPushButton('Refresh', self)
-            ButtonH.pressed.connect(self.load)
+            ButtonH.pressed.connect(self.refresh_browser)
             menubar.addWidget(ButtonH)
 
             # create extra button
@@ -99,8 +113,19 @@ class Browser(QApplication):
             Textbox = QLineEdit()
             menubar.addWidget(Textbox)
 
+            # add the widget to layout
+            self.menubar = QWidget()
+            self.menubar.setLayout(menubar)
+            self.menubar.setMaximumHeight(40)
+            self.layout.addWidget(self.menubar)
+            
             # display full screen on any monitor
             self.showMaximized()
+        
+        def refresh_browser(self):
+            """Refreshes the browser by revisiting the current link
+            """            
+            self.engine.setUrl(QUrl('#'))
 
 
 app = Browser()
