@@ -17,7 +17,11 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 # Browser class to create new browser application and window
 class Browser(QApplication):
-    def __init__(self):
+
+    # known screens and name
+    _screens = ['Screen 1']
+
+    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=1):
         # initialize the application
         super(QApplication, self).__init__([])
 
@@ -27,7 +31,16 @@ class Browser(QApplication):
 
         # create a window and load it
         self.window = self.Window()
-        self.window.load()
+        self.window.load(URL)
+
+        self.screen = screen if self.has_screen(screen) else 1
+    
+    @property
+    def screens(self):
+        return enumerate([None] + self._screens)
+    
+    def has_screen(self, screen):
+        return hasattr(self.screens, screen)
 
     class Window(QMainWindow):
         def __init__(self):
@@ -64,7 +77,7 @@ class Browser(QApplication):
             # display full screen on any monitor
             self.showMaximized()
 
-        def load(self, url=argv[1] if argv[1:] else 'https://google.com'):
+        def load(self, url: str):
             self.engine.setUrl(QUrl(url))
 
 exit(Browser().exec_())
