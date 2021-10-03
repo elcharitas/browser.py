@@ -120,7 +120,7 @@ class Browser(QApplication):
             self.layout.addWidget(self.menubar)
             
             # display full screen on any monitor
-            self.showMaximized()
+            self.showFullScreen()
         
         def refresh_browser(self):
             """Refreshes the browser by revisiting the current link
