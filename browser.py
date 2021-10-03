@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
     QLineEdit,
+    QMessageBox,
     QPushButton,
     QWidget,
     QVBoxLayout,
@@ -81,6 +82,16 @@ class Browser(QApplication):
             self.window.menubar.show()
         else:
             self.window.menubar.hide()
+    
+    def show_popup(self, message='It works!'):
+        """Displays a popup message
+
+        Args:
+            message (str, optional): The message to display. Defaults to 'It works!'.
+        """        
+        messageBox = QMessageBox()
+        messageBox.setText(message)
+        messageBox.exec_()
 
     class Window(QMainWindow):
         def __init__(self): 
