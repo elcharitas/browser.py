@@ -83,11 +83,14 @@ class Browser(QApplication):
         else:
             self.window.menubar.hide()
     
-    def show_popup(self, message='It works!'):
-        """Displays a popup message
+    def show_popup(self, message='It\'s working!'):
+        """Displays a popup message.
 
         Args:
-            message (str, optional): The message to display. Defaults to 'It works!'.
+            message (str, optional): The message to display. Defaults to 'It\'s working!'.
+        
+        Example:
+            app.show_popup(message='Some Message')
         """        
         messageBox = QMessageBox()
         messageBox.setText(message)
