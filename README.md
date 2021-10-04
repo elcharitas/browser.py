@@ -2,23 +2,23 @@
 
 This readme is generated to describe this project only.
 
-Its purpose is also to serve as a manual for using the browser.
+Its purpose is also to serve as a manual for using the browser executable only.
 
 ## Basic information
 
 As per the client's requirements, this software has the following features
 
-- Built with python 3
+- Built with python 3 using PyQt5 module
 - Contains an executable
 - can be run via command prompt
-- takes only one optional argument - the URL
+- takes two optional argument - the URL and Screen Number
 - maintains a minimal UI
-- identifies multiple monitors
+- identifies multiple monitors/screens
 - displays on full screen
 
-## Setup
+## Browser Setup
 
-In order to properly setup this software and get it working, you need some modules installed.
+In order to properly setup this software and get it working, you'll need some modules installed.
 
 Don't fret, simply run the command below via the terminal to install the modules.
 
@@ -26,7 +26,7 @@ Don't fret, simply run the command below via the terminal to install the modules
 $ pip install -r requirements.txt
 ```
 
-## Usage
+## Basic Usage
 
 To use this software, simply copy the executable found in the `dist` directory to where you would want to use it.
 
