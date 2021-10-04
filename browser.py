@@ -121,8 +121,8 @@ class Browser(QApplication):
             menubar.addWidget(Button2)
 
             # add the textbox
-            self.Textbox = QLineEdit()
-            menubar.addWidget(self.Textbox)
+            self.TextBox = QLineEdit()
+            menubar.addWidget(self.TextBox)
 
             # add the widget to layout
             self.menubar = QWidget()
@@ -146,7 +146,7 @@ class Browser(QApplication):
                 app = Browser('https://example.com')
                 print(app.window.textbox)
             """
-            return self.Textbox.text()
+            return self.TextBox.text()
 
 
 app = Browser()
