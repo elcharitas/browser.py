@@ -2,6 +2,7 @@
 from sys import argv, exit
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon
+from screeninfo import get_monitors
 
 # import required PyQt5 Widgtes
 from PyQt5.QtWidgets import (
@@ -20,7 +21,7 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 class Browser(QApplication):
 
     # known screens and name
-    _screens = ['Screen 1']
+    _screens = get_monitors()
 
     def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=argv[2] if len(argv) > 1 else 1):
         # initialize the application
@@ -30,11 +31,12 @@ class Browser(QApplication):
         self.setApplicationName('Browser')
         self.setWindowIcon(QIcon(':icon.ico'))
 
-        # create a window and load it
-        self.window = self.Window()
-        self.change_url(URL)
-
+        # resolve the screen before creating the wndow
         self.screen = screen if self.has_screen(screen) else 1
+
+        # create a window and load it
+        self.window = self.Window(self.screen)
+        self.change_url(URL)
     
     @property
     def screens(self):
@@ -97,9 +99,11 @@ class Browser(QApplication):
         messageBox.exec_()
 
     class Window(QMainWindow):
-        def __init__(self):
+        def __init__(self, screen):
             # create a connnection
             super(QMainWindow, self).__init__()
+
+            self.browser = Browser.instance()
 
             # create a container and its layout
             self.container = QWidget()
@@ -133,13 +137,25 @@ class Browser(QApplication):
             self.menubar.setMaximumHeight(40)
             self.layout.addWidget(self.menubar)
             
-            # display full screen on any monitor
-            self.showFullScreen()
+            # display the appropiate screen
+            self.resolve_screen(screen)
         
         def refresh_browser(self):
             """Refreshes the browser by revisiting the current link
             """
             self.engine.setUrl(QUrl(self.engine.url()))
+        
+        def resolve_screen(self, screen):
+            """Resolves the screen/monitor
+
+            Args:
+                screen (int): The appropiate screen number
+            """            
+            if screen == 1:
+                # display full screen on any monitor
+                self.showFullScreen()
+            else:
+                self.browser.show_popup(message='Unsupported Screen!')
         
         @property
         def textbox(self):
@@ -150,12 +166,3 @@ class Browser(QApplication):
                 print(app.window.textbox)
             """
             return self.TextBox.text()
-
-
-app = Browser()
-# additional browser logic can come after this line
-"""Example logic to show popup with the text box's text
-app.show_popup(message=app.window.textbox)
-"""
-# this should always be called last
-exit(app.exec_())
