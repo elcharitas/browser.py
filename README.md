@@ -41,7 +41,7 @@ $ ./browser [url]
 To build a new version of the browser, simply run this command
 
 ```sh
-$ pyinstaller -w -F -i "./icon.ico" browser.py
+$ pyinstaller -w -F -i "./icon.ico" --name browser package.py
 ```
 
 The above command will create three things:
