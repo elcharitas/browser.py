@@ -21,11 +21,10 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 
 class Browser(QApplication):
-    
     # list of autodetected screens
     screens = get_monitors()
 
-    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=argv[2] if len(argv) > 1 else 1):
+    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=1):
         # initialize the application
         super(QApplication, self).__init__([])
 
@@ -34,12 +33,13 @@ class Browser(QApplication):
         self.setWindowIcon(QIcon(':icon.ico'))
 
         # resolve the screen before creating the wndow
-        self.screen = screen if self.has_screen(screen) else self.show_popup(message='Using default Screen!') or 1
+        self.screen = screen if self.has_screen(screen) else 1
 
         # create a window and load it
         self.window = self.Window(self.screen)
         self.change_url(URL)
-    
+        self.waiter()
+
     def has_screen(self, screen):
         """Used internally to check if a screen is supported or existing
 
@@ -90,6 +90,23 @@ class Browser(QApplication):
         messageBox = QMessageBox()
         messageBox.setText(message)
         messageBox.exec_()
+
+    def waiter(self, closed=False):
+        """Awaits commands which are really python scripts and then executes them.
+
+        Args:
+            closed (bool, optional): Set to True to close the command waiter loop. Defaults to False.
+        """
+        while closed is not True:
+            try:
+                command = input("Please enter command: ")
+                if command == "quit":
+                    closed = True
+                    exit()
+                elif command:
+                    print(exec(command))
+            except Exception as Except:
+                print("error live session -- ", Except)
 
     class Window(QMainWindow):
         def __init__(self, screen):
@@ -149,8 +166,8 @@ class Browser(QApplication):
                     # display full screen on any monitor
                     self.showFullScreen()
                 else:
-                    self.setFixedWidth(self.browser.screens[screen].width)
-                    self.setFixedHeight(self.browser.screens[screen].height)
+                    self.setFixedWidth(self.browser.screens[screen-1].width)
+                    self.setFixedHeight(self.browser.screens[screen-1].height)
             else:
                 self.browser.show_popup(message='Unsupported Screen!')
         
