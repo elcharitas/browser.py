@@ -22,7 +22,7 @@ class Browser(QApplication):
     # known screens and name
     _screens = ['Screen 1']
 
-    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=1):
+    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=argv[2] if len(argv) > 1 else 1):
         # initialize the application
         super(QApplication, self).__init__([])
 
@@ -94,7 +94,7 @@ class Browser(QApplication):
         messageBox.exec_()
 
     class Window(QMainWindow):
-        def __init__(self): 
+        def __init__(self):
             # create a connnection
             super(QMainWindow, self).__init__()
 
@@ -135,8 +135,8 @@ class Browser(QApplication):
         
         def refresh_browser(self):
             """Refreshes the browser by revisiting the current link
-            """            
-            self.engine.setUrl(QUrl('#'))
+            """
+            self.engine.setUrl(QUrl(self.engine.url()))
         
         @property
         def textbox(self):
@@ -150,4 +150,5 @@ class Browser(QApplication):
 
 
 app = Browser()
+# this should always be called last
 exit(app.exec_())
