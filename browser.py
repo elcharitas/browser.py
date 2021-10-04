@@ -18,10 +18,12 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 # Browser class to create new browser application and window
-class Browser(QApplication):
 
-    # known screens and name
-    _screens = get_monitors()
+
+class Browser(QApplication):
+    
+    # list of autodetected screens
+    screens = get_monitors()
 
     def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=argv[2] if len(argv) > 1 else 1):
         # initialize the application
@@ -32,20 +34,11 @@ class Browser(QApplication):
         self.setWindowIcon(QIcon(':icon.ico'))
 
         # resolve the screen before creating the wndow
-        self.screen = screen if self.has_screen(screen) else 1
+        self.screen = screen if self.has_screen(screen) else self.show_popup(message='Using default Screen!') or 1
 
         # create a window and load it
         self.window = self.Window(self.screen)
         self.change_url(URL)
-    
-    @property
-    def screens(self):
-        """Gets an enumerated object of screens
-
-        Returns:
-            obj: The enumerated object with an index screen
-        """        
-        return enumerate([None] + self._screens)
     
     def has_screen(self, screen):
         """Used internally to check if a screen is supported or existing
@@ -56,7 +49,7 @@ class Browser(QApplication):
         Returns:
             bool: true if the screen exists
         """        
-        return hasattr(self.screens, str(screen))
+        return screen <= len(self.screens) and screen > 0
     
     def change_url(self, url: str):
         """Changes the URL the engine is to load
@@ -151,7 +144,7 @@ class Browser(QApplication):
             Args:
                 screen (int): The appropiate screen number
             """            
-            if screen == 1:
+            if self.browser.has_screen(screen):
                 # display full screen on any monitor
                 self.showFullScreen()
             else:
