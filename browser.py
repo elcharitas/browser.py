@@ -145,8 +145,12 @@ class Browser(QApplication):
                 screen (int): The appropiate screen number
             """            
             if self.browser.has_screen(screen):
-                # display full screen on any monitor
-                self.showFullScreen()
+                if screen == 1:
+                    # display full screen on any monitor
+                    self.showFullScreen()
+                else:
+                    self.setFixedWidth(self.browser.screens[screen].width)
+                    self.setFixedHeight(self.browser.screens[screen].height)
             else:
                 self.browser.show_popup(message='Unsupported Screen!')
         
