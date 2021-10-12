@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout
 )
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEngineView
 
 # Browser class to create new browser application and window
 
@@ -123,6 +123,8 @@ class Browser(QApplication):
 
             # create the engine to bind
             self.engine = QWebEngineView()
+            self.engine.settings().setAttribute(QWebEngineSettings.WebAttribute.ShowScrollBars, False)
+            self.engine.settings().setAttribute(QWebEngineSettings.WebAttribute.AllowRunningInsecureContent, True)
             self.layout.addWidget(self.engine)
 
             # create the menubar
