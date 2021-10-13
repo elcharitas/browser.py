@@ -19,7 +19,7 @@ def sample_entry(app):
     
             app.show_half_screen() # shows half screen
     
-        III.We can resfresh the browser.
+        III.We can refresh the browser.
     
             app.refresh() # reloads the currently visited link
         
@@ -36,6 +36,6 @@ def sample_entry(app):
             exit(1)
     """
 
-    # uncomeent the line below to exit the browser
+    # uncomment the line below to exit the browser
     # exit()
     ...
