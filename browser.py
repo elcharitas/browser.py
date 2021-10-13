@@ -61,21 +61,6 @@ class Browser(QApplication):
         """
         self.window.engine.setUrl(QUrl(url))
     
-    def hide_menubar(self, disabled=True):
-        """Hides/Shows the menu bar when disabled is True/False
-
-        Args:
-            disabled (bool, optional): Whether or not to hide the menubar. Defaults to True.
-        
-        Example:
-            app = Browser('https://example.com')
-            app.hide_menubar()
-        """
-        if disabled is not False:
-            self.window.menubar.show()
-        else:
-            self.window.menubar.hide()
-    
     def show_popup(self, message='It\'s working!'):
         """Displays a popup message.
 
@@ -89,6 +74,10 @@ class Browser(QApplication):
         messageBox.setText(message)
         messageBox.exec_()
 
+    def refresh(self):
+        """Refreshes the browser by revisiting the current link
+        """
+        self.window.engine.setUrl(QUrl(self.window.engine.url()))
     class Window(QMainWindow):
         def __init__(self, half_screen: bool):
             # create a connection
@@ -104,11 +93,6 @@ class Browser(QApplication):
 
             # display the appropriate screen
             self.resolve_screen(half_screen)
-        
-        def refresh_browser(self):
-            """Refreshes the browser by revisiting the current link
-            """
-            self.engine.setUrl(QUrl(self.engine.url()))
         
         def resolve_screen(self, half_screen: bool):
             """Resolves the screen/monitor
