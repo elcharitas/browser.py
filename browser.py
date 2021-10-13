@@ -24,7 +24,7 @@ class Browser(QApplication):
     # list of autodetected screens
     screens = get_monitors()
 
-    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', screen=1):
+    def __init__(self, URL=argv[1] if argv[1:] else 'https://google.com', half_screen=False):
         # initialize the application
         super(QApplication, self).__init__([])
 
@@ -32,13 +32,9 @@ class Browser(QApplication):
         self.setApplicationName('Browser')
         self.setWindowIcon(QIcon(':icon.ico'))
 
-        # resolve the screen before creating the wndow
-        self.screen = screen if self.has_screen(screen) else 1
-
         # create a window and load it
-        self.window = self.Window(self.screen)
+        self.window = self.Window(half_screen)
         self.change_url(URL)
-        self.waiter()
 
     def has_screen(self, screen):
         """Used internally to check if a screen is supported or existing
@@ -91,25 +87,8 @@ class Browser(QApplication):
         messageBox.setText(message)
         messageBox.exec_()
 
-    def waiter(self, closed=False):
-        """Awaits commands which are really python scripts and then executes them.
-
-        Args:
-            closed (bool, optional): Set to True to close the command waiter loop. Defaults to False.
-        """
-        while closed is not True:
-            try:
-                command = input("Please enter command: ")
-                if command == "quit":
-                    closed = True
-                    exit()
-                elif command:
-                    print(exec(command))
-            except Exception as Except:
-                print("error live session -- ", Except)
-
     class Window(QMainWindow):
-        def __init__(self, screen):
+        def __init__(self, half_screen: bool):
             # create a connnection
             super(QMainWindow, self).__init__()
 
@@ -150,28 +129,24 @@ class Browser(QApplication):
             self.layout.addWidget(self.menubar)
             
             # display the appropiate screen
-            self.resolve_screen(screen)
+            self.resolve_screen(half_screen)
         
         def refresh_browser(self):
             """Refreshes the browser by revisiting the current link
             """
             self.engine.setUrl(QUrl(self.engine.url()))
         
-        def resolve_screen(self, screen):
+        def resolve_screen(self, half_screen: bool):
             """Resolves the screen/monitor
 
             Args:
                 screen (int): The appropiate screen number
             """            
-            if self.browser.has_screen(screen):
-                if screen == 1:
-                    # display full screen on any monitor
-                    self.showFullScreen()
-                else:
-                    self.setFixedWidth(self.browser.screens[screen-1].width)
-                    self.setFixedHeight(self.browser.screens[screen-1].height)
+            if half_screen:
+                self.setFixedWidth(self.browser.screens[-1].width/2)
+                self.setFixedHeight(self.browser.screens[-1].height/2)
             else:
-                self.browser.show_popup(message='Unsupported Screen!')
+                self.showFullScreen()
         
         @property
         def textbox(self):
