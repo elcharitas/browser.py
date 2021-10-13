@@ -1,13 +1,14 @@
 from browser import Browser
+from sample import sample_entry
 
-# create a new browser
-app = Browser().exec_()
-# head on to browser.py and edit Browser::waiter
-# or simply create a new class to extend it
-# and define a new waiter method
-"""Example of extending Browser class
-class NewBrowser(Browser):
-    def waiter(self, closed=False):
-        while closed == True:
-            print('It works')
+# create a new browser object
+app = Browser(sample_entry, half_screen=True)
 """
+The Browser class takes in three arguments in order: entry, URL, half_screen
+
+Examples:
+    app = Browser(URL='https://google.com')
+    app = Browser(entry=sample_entry, URL='https://google.com')
+    app = Browser(entry=sample_entry, URL='https://google.com', half_screen=True)
+"""
+app.exec_()
