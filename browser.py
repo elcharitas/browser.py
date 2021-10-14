@@ -59,7 +59,8 @@ class Browser(QApplication):
             app = Browser('https://example.com')
             app.change_url('https://example2.com')
         """
-        self.window.engine.setUrl(QUrl(url))
+        self.window.engine.load(QUrl(url))
+        self.window.remove_scrollbar()
     
     def show_popup(self, message='It\'s working!'):
         """Displays a popup message.
@@ -77,7 +78,7 @@ class Browser(QApplication):
     def refresh(self):
         """Refreshes the browser by revisiting the current link
         """
-        self.window.engine.setUrl(QUrl(self.window.engine.url()))
+        self.window.engine.reload()
     class Window(QMainWindow):
         def __init__(self, half_screen: bool):
             # create a connection
@@ -93,6 +94,13 @@ class Browser(QApplication):
 
             # display the appropriate screen
             self.resolve_screen(half_screen)
+        
+        def remove_scrollbar(self):
+            """This method does nothing fancy.
+            It removes scrollbars using JavaScript.
+            """
+            self.engine.page().runJavaScript(
+                'document.documentElement.style.overflow=\'hidden\';')
         
         def resolve_screen(self, half_screen: bool):
             """Resolves the screen/monitor
