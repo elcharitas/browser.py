@@ -60,7 +60,6 @@ class Browser(QApplication):
             app.change_url('https://example2.com')
         """
         self.window.engine.load(QUrl(url))
-        self.window.remove_scrollbar()
     
     def show_popup(self, message='It\'s working!'):
         """Displays a popup message.
@@ -87,20 +86,13 @@ class Browser(QApplication):
 
             # create the engine to bind
             self.engine = QWebEngineView()
-            #self.engine.settings().setAttribute(QWebEngineSettings.WebAttribute.ShowScrollBars, False)
+            self.engine.settings().setAttribute(QWebEngineSettings.WebAttribute.ShowScrollBars, False)
             self.engine.settings().setAttribute(
                 QWebEngineSettings.WebAttribute.AllowRunningInsecureContent, True)
             self.setCentralWidget(self.engine)
 
             # display the appropriate screen
             self.resolve_screen(half_screen)
-        
-        def remove_scrollbar(self):
-            """This method does nothing fancy.
-            It removes scrollbars using JavaScript.
-            """
-            self.engine.page().runJavaScript(
-                'document.documentElement.style.overflow=\'hidden\';')
         
         def resolve_screen(self, half_screen: bool):
             """Resolves the screen/monitor
