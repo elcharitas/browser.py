@@ -1,5 +1,5 @@
 from browser import Browser
-from sample import sample_entry
+from example import sample_entry
 
 # create a new browser object
 app = Browser(sample_entry, half_screen=True)
