@@ -17,7 +17,7 @@ class Browser(QApplication):
     # list of autodetected screens
     screens = get_monitors()
 
-    def __init__(self, entry = None, URL=argv[1] if argv[1:] else 'https://google.com', half_screen=False):
+    def __init__(self, entry = None, URL=argv[1] if argv[1:] else 'https://google.com', half_screen=True):
         # initialize the application
         super(QApplication, self).__init__([])
 
