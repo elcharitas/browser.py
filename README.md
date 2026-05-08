@@ -8,7 +8,7 @@ Its purpose is also to serve as a manual for using the browser executable only.
 
 As per the client's requirements, this software has the following features
 
-- Built with python 3 using PyQt5 module
+- Built using python and PyQt5 module
 - Contains an executable
 - can be run via command prompt
 - takes two optional argument - the URL and Screen Number
