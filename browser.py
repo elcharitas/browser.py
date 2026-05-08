@@ -38,8 +38,9 @@ class Browser(QApplication):
 
         Returns:
             bool: true if the screen exists
+            else false
         """
-        return screen <= len(self.screens) and screen > 0
+        return screen <= len(self.screens) and screen > 1
     
     def show_half_screen(self, show=True):
         """Dynamically shows half/full screen.
